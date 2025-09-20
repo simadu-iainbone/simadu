@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SIMADU v.4</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Custom gradient dan styles */
+        .bg-gradient-fresh-green {
+            background-image: linear-gradient(135deg, #6EE7B7 10%, #3B82F6 100%);
+        }
+        .btn-gradient {
+            background-image: linear-gradient(to right, #10B981 0%, #34D399 51%, #10B981 100%);
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+        }
+        .btn-gradient:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #10B981;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex items-center justify-center bg-gradient-fresh-green p-4">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 space-y-6 transform transition-all hover:scale-105 duration-300">
+            <!-- Header dengan Logo -->
+            <div class="flex justify-center items-center space-x-4">
+                <img src="https://lh3.googleusercontent.com/d/1-67WxbxTFeHxHD5Ph5uznKooU9aJPLB3" alt="Logo IAIN Bone" class="h-20 w-20">
+            </div>
+            
+            <!-- Judul Aplikasi -->
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-800">SIMADU v.4</h1>
+                <p class="text-gray-500 mt-1">Sistem Informasi Manajemen Kearsipan dan Persuratan</p>
+                <p class="font-semibold text-gray-600">IAIN Bone</p>
+            </div>
+
+            <!-- Form Login -->
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="username" class="text-sm font-medium text-gray-700">Username</label>
+                    <input id="username" name="username" type="text" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                <div>
+                    <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                    <input id="password" name="password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                
+                <!-- Tombol Login -->
+                <div>
+                    <button type="submit" id="loginButton" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-md font-semibold btn-gradient focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <span id="buttonText">Masuk</span>
+                        <div id="loader" class="loader hidden"></div>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Pesan Error/Status -->
+            <div id="message" class="text-center text-sm font-medium"></div>
+
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const buttonText = document.getElementById('buttonText');
+        const loader = document.getElementById('loader');
+        const message = document.getElementById('message');
+
+        // URL Google Apps Script Web App Anda akan ditempatkan di sini
+        const GAS_WEB_APP_URL = 'URL_WEB_APP_ANDA'; // <-- GANTI DENGAN URL DEPLOYMENT ANDA
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Mencegah form dari refresh halaman
+
+            // 1. Tampilkan loading dan nonaktifkan tombol
+            buttonText.classList.add('hidden');
+            loader.classList.remove('hidden');
+            loginButton.disabled = true;
+            message.textContent = '';
+            message.classList.remove('text-red-500', 'text-green-500');
+
+            // 2. Ambil data dari form
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                // 3. Kirim data ke Google Apps Script
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8', // Menggunakan text/plain untuk menghindari preflight CORS
+                    },
+                    body: JSON.stringify({ 
+                        action: 'login',
+                        username: username, 
+                        password: password 
+                    })
+                });
+
+                const result = await response.json();
+
+                // 4. Proses hasil dari backend
+                if (result.status === 'success') {
+                    message.textContent = 'Login berhasil! Mengarahkan ke dashboard...';
+                    message.classList.add('text-green-500');
+                    // Simpan data user di sessionStorage untuk digunakan di halaman lain
+                    sessionStorage.setItem('user', JSON.stringify(result.data));
+                    // Arahkan ke halaman dashboard setelah 2 detik
+                    setTimeout(() => {
+                        // window.location.href = '/dashboard.html'; // Ganti dengan halaman admin/dashboard Anda
+                        alert('Login Berhasil! (Ini akan dialihkan ke halaman dashboard)');
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || 'Username atau password salah.');
+                }
+
+            } catch (error) {
+                message.textContent = error.message;
+                message.classList.add('text-red-500');
+                
+                // Kembalikan tombol ke state normal
+                buttonText.classList.remove('hidden');
+                loader.classList.add('hidden');
+                loginButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
