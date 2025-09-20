@@ -1,0 +1,2 @@
+Sheet Masuk
+Agenda, Pengirim, Tujuan, Tembusan, Tgl Diterima, Tgl Naskah, Jenis, Nomor Surat, Sifat, Hal, Isi Ringkas, Klasifikasi, Keterangan, Pengolah, Pelaksana, Hari, Bulan, Tahun, User, Catatan User, File M, File M Link, Internal, Unit, Status

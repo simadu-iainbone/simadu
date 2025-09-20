@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SIMADU v.4</title>
-    <!-- Tailwind CSS CDN -->
+    <title>SIMADU v.4 - IAIN Bone</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Menggunakan font Inter sebagai default */
         body {
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Custom gradient dan styles */
-        .bg-gradient-fresh-green {
-            background-image: linear-gradient(135deg, #6EE7B7 10%, #3B82F6 100%);
         }
         .btn-gradient {
             background-image: linear-gradient(to right, #10B981 0%, #34D399 51%, #10B981 100%);
@@ -29,9 +21,7 @@
             color: white;
         }
         .btn-gradient:hover {
-            background-position: right center; /* change the direction of the change here */
-            color: #fff;
-            text-decoration: none;
+            background-position: right center;
         }
         .loader {
             border: 4px solid #f3f3f3;
@@ -45,118 +35,103 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .sidebar-item:hover { background-color: #10B981; color: white; }
+        .sidebar-item:hover svg { stroke: white; }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <div class="min-h-screen flex items-center justify-center bg-gradient-fresh-green p-4">
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 space-y-6 transform transition-all hover:scale-105 duration-300">
-            <!-- Header dengan Logo -->
-            <div class="flex justify-center items-center space-x-4">
-                <img src="https://lh3.googleusercontent.com/d/1-67WxbxTFeHxHD5Ph5uznKooU9aJPLB3" alt="Logo IAIN Bone" class="h-20 w-20">
+    <!-- Container Halaman Login -->
+    <div id="login-container">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
+                <div class="flex justify-center items-center">
+                    <img src="https://lh3.googleusercontent.com/d/1-67WxbxTFeHxHD5Ph5uznKooU9aJPLB3" alt="Logo IAIN Bone" class="h-24 w-24">
+                </div>
+                <div class="text-center">
+                    <h1 class="text-3xl font-bold text-gray-800">SIMADU v.4</h1>
+                    <p class="text-gray-500 mt-1">Sistem Informasi Manajemen Kearsipan dan Persuratan</p>
+                    <p class="font-semibold text-gray-600">IAIN Bone</p>
+                </div>
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="username" class="text-sm font-medium text-gray-700">Username</label>
+                        <input id="username" name="username" type="text" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    </div>
+                    <div>
+                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                        <input id="password" name="password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    </div>
+                    <div>
+                        <button type="submit" id="loginButton" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-md font-semibold btn-gradient focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <span id="buttonText">Masuk</span>
+                            <div id="loader" class="loader hidden"></div>
+                        </button>
+                    </div>
+                </form>
+                <div id="message" class="text-center text-sm font-medium"></div>
             </div>
-            
-            <!-- Judul Aplikasi -->
-            <div class="text-center">
-                <h1 class="text-3xl font-bold text-gray-800">SIMADU v.4</h1>
-                <p class="text-gray-500 mt-1">Sistem Informasi Manajemen Kearsipan dan Persuratan</p>
-                <p class="font-semibold text-gray-600">IAIN Bone</p>
-            </div>
-
-            <!-- Form Login -->
-            <form id="loginForm" class="space-y-6">
-                <div>
-                    <label for="username" class="text-sm font-medium text-gray-700">Username</label>
-                    <input id="username" name="username" type="text" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
-                </div>
-                <div>
-                    <label for="password" class="text-sm font-medium text-gray-700">Password</label>
-                    <input id="password" name="password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
-                </div>
-                
-                <!-- Tombol Login -->
-                <div>
-                    <button type="submit" id="loginButton" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-md font-semibold btn-gradient focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        <span id="buttonText">Masuk</span>
-                        <div id="loader" class="loader hidden"></div>
-                    </button>
-                </div>
-            </form>
-            
-            <!-- Pesan Error/Status -->
-            <div id="message" class="text-center text-sm font-medium"></div>
-
         </div>
     </div>
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const loginButton = document.getElementById('loginButton');
-        const buttonText = document.getElementById('buttonText');
-        const loader = document.getElementById('loader');
-        const message = document.getElementById('message');
+    <!-- Container Halaman Dashboard (Awalnya tersembunyi) -->
+    <div id="dashboard-container" class="hidden">
+        <div class="flex h-screen bg-gray-100">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="w-64 bg-white shadow-lg flex flex-col transition-transform duration-300 ease-in-out transform -translate-x-full md:translate-x-0 fixed md:relative h-full z-20">
+                <div class="flex items-center justify-center p-4 border-b">
+                    <img src="https://lh3.googleusercontent.com/d/1-67WxbxTFeHxHD5Ph5uznKooU9aJPLB3" alt="Logo IAIN Bone" class="h-12 w-12 mr-3">
+                    <span class="text-xl font-bold text-gray-800">SIMADU v.4</span>
+                </div>
+                <nav class="flex-1 px-2 py-4 space-y-2">
+                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 rounded-lg sidebar-item bg-green-100 text-green-800 font-semibold">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        Dashboard
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 rounded-lg sidebar-item">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>
+                        Surat Masuk
+                    </a>
+                     <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 rounded-lg sidebar-item">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        Surat Keluar
+                    </a>
+                </nav>
+                 <div class="px-2 py-4">
+                    <button id="logoutButton" class="w-full flex items-center justify-center px-4 py-2.5 text-red-700 rounded-lg hover:bg-red-100">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Keluar
+                    </button>
+                </div>
+            </aside>
+            <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-10 hidden md:hidden"></div>
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <header class="flex justify-between items-center p-4 bg-white border-b">
+                    <button id="hamburger" class="text-gray-500 focus:outline-none md:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                    <div class="font-semibold text-lg text-gray-700 hidden md:block">Dashboard</div>
+                    <div class="flex items-center space-x-3">
+                         <span id="userDisplayName" class="font-medium text-gray-700">Memuat...</span>
+                         <img class="h-9 w-9 rounded-full object-cover" src="https://ui-avatars.com/api/?name=User&background=10B981&color=fff" alt="Avatar">
+                    </div>
+                </header>
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+                    <div class="container mx-auto">
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">Selamat Datang, <span id="welcomeName">User</span>!</h1>
+                        <p class="text-gray-600 mb-6">Berikut adalah ringkasan aktivitas persuratan Anda.</p>
+                        <!-- Konten Dashboard lainnya... -->
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
 
-        // URL Google Apps Script Web App Anda akan ditempatkan di sini
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwgIiYtJeLgqTfcb6AX1wgBY40jyxuSrhjafP3kigxgAcSz0GinLH3As7UrGGLLd4E/exec'; // <-- GANTI DENGAN URL DEPLOYMENT ANDA
-
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Mencegah form dari refresh halaman
-
-            // 1. Tampilkan loading dan nonaktifkan tombol
-            buttonText.classList.add('hidden');
-            loader.classList.remove('hidden');
-            loginButton.disabled = true;
-            message.textContent = '';
-            message.classList.remove('text-red-500', 'text-green-500');
-
-            // 2. Ambil data dari form
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                // 3. Kirim data ke Google Apps Script
-                const response = await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8', // Menggunakan text/plain untuk menghindari preflight CORS
-                    },
-                    body: JSON.stringify({ 
-                        action: 'login',
-                        username: username, 
-                        password: password 
-                    })
-                });
-
-                const result = await response.json();
-
-                // 4. Proses hasil dari backend
-                if (result.status === 'success') {
-                    message.textContent = 'Login berhasil! Mengarahkan ke dashboard...';
-                    message.classList.add('text-green-500');
-                    // Simpan data user di sessionStorage untuk digunakan di halaman lain
-                    sessionStorage.setItem('user', JSON.stringify(result.data));
-                    // Arahkan ke halaman dashboard setelah 2 detik
-                    setTimeout(() => {
-                        // window.location.href = '/dashboard.html'; // Ganti dengan halaman admin/dashboard Anda
-                        alert('Login Berhasil! (Ini akan dialihkan ke halaman dashboard)');
-                    }, 2000);
-                } else {
-                    throw new Error(result.message || 'Username atau password salah.');
-                }
-
-            } catch (error) {
-                message.textContent = error.message;
-                message.classList.add('text-red-500');
-                
-                // Kembalikan tombol ke state normal
-                buttonText.classList.remove('hidden');
-                loader.classList.add('hidden');
-                loginButton.disabled = false;
-            }
-        });
-    </script>
+    <script src="admin.js" defer></script>
 </body>
 </html>
-
 
