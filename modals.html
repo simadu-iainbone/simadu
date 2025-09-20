@@ -1,0 +1,131 @@
+<!-- 
+  File ini berisi semua kode HTML untuk komponen modal.
+  File ini akan dimuat secara dinamis oleh admin.js
+  dan disuntikkan ke dalam halaman utama.
+  Anda bisa mengedit desain modal di sini tanpa mengganggu file utama.
+-->
+
+<!-- Modal untuk Tambah/Edit Surat Masuk -->
+<div id="surat-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg">
+    <div class="bg-white w-4/5 max-h-[90vh] rounded-xl shadow-xl flex flex-col">
+        <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-xl">
+            <h2 id="modal-title" class="text-2xl font-bold text-gray-800">Tambah Surat Masuk</h2>
+            <button id="close-modal-button" class="text-gray-400 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        </div>
+        <form id="surat-form" class="p-6 flex-1 space-y-4 overflow-y-auto">
+            <input type="hidden" id="edit-agenda-id" name="editAgendaId">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2">
+                <div class="form-group">
+                    <input type="text" id="agenda" name="Agenda" class="form-input w-full px-4 py-2" placeholder=" " required>
+                    <label for="agenda" class="form-label left-4">Agenda</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="pengirim" name="Pengirim" class="form-input w-full px-4 py-2" placeholder=" " required>
+                    <label for="pengirim" class="form-label left-4">Pengirim</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tujuan" name="Tujuan" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="tujuan" class="form-label left-4">Tujuan</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tembusan" name="Tembusan" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="tembusan" class="form-label left-4">Tembusan</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tgl_diterima" name="Tgl Diterima" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="tgl_diterima" class="form-label left-4">Tgl Diterima (dd/mm/yyyy)</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tgl_naskah" name="Tgl Naskah" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="tgl_naskah" class="form-label left-4">Tgl Naskah (dd/mm/yyyy)</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="jenis" name="Jenis" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="jenis" class="form-label left-4">Jenis</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nomor_surat" name="Nomor Surat" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="nomor_surat" class="form-label left-4">Nomor Surat</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="sifat" name="Sifat" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="sifat" class="form-label left-4">Sifat</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="klasifikasi" name="Klasifikasi" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="klasifikasi" class="form-label left-4">Klasifikasi</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="keterangan" name="Keterangan" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="keterangan" class="form-label left-4">Keterangan</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="pengolah" name="Pengolah" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="pengolah" class="form-label left-4">Pengolah</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="pelaksana" name="Pelaksana" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="pelaksana" class="form-label left-4">Pelaksana</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="user" name="User" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="user" class="form-label left-4">User</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="catatan_user" name="Catatan User" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="catatan_user" class="form-label left-4">Catatan User</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="file_m" name="File M" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="file_m" class="form-label left-4">File M</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="file_m_link" name="File M Link" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="file_m_link" class="form-label left-4">File M Link</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="internal" name="Internal" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="internal" class="form-label left-4">Internal</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="unit" name="Unit" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="unit" class="form-label left-4">Unit</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="status" name="Status" class="form-input w-full px-4 py-2" placeholder=" ">
+                    <label for="status" class="form-label left-4">Status</label>
+                </div>
+                <div class="md:col-span-3 form-group">
+                    <textarea id="hal" name="Hal" rows="3" class="form-input w-full px-4 py-2" placeholder=" "></textarea>
+                    <label for="hal" class="form-label left-4">Hal</label>
+                </div>
+                <div class="md:col-span-3 form-group">
+                    <textarea id="isi_ringkas" name="Isi Ringkas" rows="3" class="form-input w-full px-4 py-2" placeholder=" "></textarea>
+                    <label for="isi_ringkas" class="form-label left-4">Isi Ringkas</label>
+                </div>
+            </div>
+        </form>
+        <div class="p-4 border-t bg-gray-50 flex justify-end space-x-2 rounded-b-xl">
+             <button type="button" id="cancel-modal-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg">Batal</button>
+             <button type="submit" form="surat-form" id="save-surat-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center w-28">
+                <span id="save-text">Simpan</span>
+                <i id="save-spinner" class="fas fa-spinner fa-spin hidden"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal untuk Konfirmasi Hapus -->
+<div id="delete-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-bg">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-sm">
+         <div class="p-6 text-center">
+            <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i>
+            <h3 class="text-lg font-bold text-gray-800">Anda Yakin?</h3>
+            <p class="text-sm text-gray-600 mt-2">Apakah Anda yakin ingin menghapus data surat ini? Proses ini tidak dapat dibatalkan.</p>
+         </div>
+         <div class="px-6 pb-4 flex justify-center space-x-4">
+            <button id="cancel-delete-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg w-full">Batal</button>
+            <button id="confirm-delete-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg w-full">Ya, Hapus</button>
+         </div>
+    </div>
+</div>
